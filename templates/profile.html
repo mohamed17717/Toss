@@ -1,0 +1,88 @@
+{% extends "layout.html" %}
+
+
+
+{% block title %}
+Welecome {{user.username}}
+{% endblock %}
+
+{% block content %}
+
+<main id="profile" class="">
+
+	<h2 class="text-center">{{profile.username}}</h2>
+	{% if profile.ownProfile %}
+	<div class="row">
+		<div class="col-12 text-center bg-light">
+			<h3>Balance</h3>
+			<p>{{wallet.balance}}$</p>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-12 text-center bg-light">
+			<h3>In Use</h3>
+			<p>{{wallet.inuse}}$</p>
+		</div>
+	</div>
+	{% endif %}
+
+	<div class="row">
+		<div class="col-6 text-center bg-green">
+			<h3>Won</h3>
+			<p>{{profile.userWalletWin}}$</p>
+		</div>
+		<div class="col-6 text-center bg-red">
+			<h3>Lose</h3>
+			<p>{{profile.userWalletLose}}$</p>
+		</div>
+	</div>
+
+	<table class="table">
+		<h3>Alive Games</h3>
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col">Up</th>
+				<th scope="col">Time</th>
+				<th scope="col">Ticket</th>
+				<th scope="col">Winners</th>
+				<th scope="col" class="d-none d-sm-block">Percent</th>
+				<th scope="col">Earn</th>
+				<th scope="col" class="d-none d-md-block">Total</th>
+				<th scope="col">#</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for id, r in profile.userRolletsJoined.items() %}
+			{% if r.upNow == 1%}
+			{% include 'table-clms.html' %}
+			{% endif %}
+			{% endfor %}
+		</tbody>
+	</table>
+
+
+	<table class="table">
+		<h3> All Joined Games</h3>
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col">Up</th>
+				<th scope="col">Time</th>
+				<th scope="col">Ticket</th>
+				<th scope="col">Winners</th>
+				<th scope="col" class="d-none d-sm-block">Percent</th>
+				<th scope="col">Earn</th>
+				<th scope="col" class="d-none d-md-block">Total</th>
+				<th scope="col">#</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for id, r in profile.userRolletsJoined.items() %}
+			{% include 'table-clms.html' %}
+			{% endfor %}
+		</tbody>
+	</table>
+
+
+</main>
+
+{% endblock %}

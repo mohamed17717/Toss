@@ -1,0 +1,174 @@
+{% extends "layout.html" %}
+
+
+{% block title %}
+Welecome {{user.username}}
+{% endblock %}
+
+{% block content %}
+<main id="home" class="">
+
+	<div class="modal fade" id="create-game" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header text-center">
+					<h4 class="modal-title w-100 font-weight-bold">Create Game</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form action="{{ url_for('createGame') }}" method="POST">
+					<div class="modal-body mx-3">
+						<div class="input-group md-form mb-1">
+							<input type="number" class="form-control validate" name="howLong" placeholder="How Long" required>
+							<input type="number" class="form-control validate" name="ticket" placeholder="Ticket" required>
+							<input type="number" class="form-control validate" name="percentOfWinners" placeholder="Percent" required>
+						</div>
+					</div>
+					<div class="modal-footer d-flex justify-content-center">
+						<input type="submit" class="btn btn-outline-primary" value="Create">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="filter-games" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header text-center">
+					<h4 class="modal-title w-100 font-weight-bold">Filter Games</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form action="{{ url_for('filterGames') }}" method="POST">
+					<div class="modal-body mx-3">
+						<div class="input-group md-form mb-1">
+							<label class="col-12" or="">Winning</label>
+							<input type="number" class="form-control validate" name="percentOfWinnersStart" placeholder="min" required>
+							<input type="number" class="form-control validate" name="percentOfWinnersEnd" placeholder="max" required>
+						</div>
+					</div>
+					<div class="modal-body mx-3">
+						<div class="input-group md-form mb-1">
+							<label class="col-12" or="">Ticket</label>
+							<input type="number" class="form-control validate" name="ticketStart" placeholder="min" required>
+							<input type="number" class="form-control validate" name="ticketEnd" placeholder="max" required>
+						</div>
+					</div>
+					<div class="modal-body mx-3">
+						<div class="input-group md-form mb-1">
+							<input type="checkbox" id="filter-upnow" name="upNow" value="1" checked>
+							<label for="filter-upnow">up now</label>
+						</div>
+					</div>
+					<div class="modal-footer d-flex justify-content-center">
+						<input type="submit" class="btn btn-outline-primary" value="Create">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="input-group d-flex justify-content-end">
+		<div class="input-group-append">
+			<a href="" class="btn btn-outline-success btn-rounded mb-4" data-toggle="modal" data-target="#filter-games">
+				Filter Games
+			</a>
+			<a href="" class="btn btn-outline-primary btn-rounded mb-4" data-toggle="modal" data-target="#create-game">
+				Create Game
+			</a>
+		</div>
+	</div>
+
+
+	<h3>Joined Games</h3>
+	<table class="table">
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col">Up</th>
+				<th scope="col">Time</th>
+				<th scope="col">Ticket</th>
+				<th scope="col">Winners</th>
+				<th scope="col" class="d-none d-sm-block">Percent</th>
+				<th scope="col">Earn</th>
+				<th scope="col" class="d-none d-md-block">Total</th>
+				<th scope="col">#</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for id, r in rolletsIn.items() %}
+			{% include 'table-clms.html' %}
+			{% endfor %}
+		</tbody>
+	</table>
+	{% if not rolletsIn %}
+	<div class="row">
+		<div class="bg-light text-center col-12">
+			you not joined any Game yet
+		</div>
+	</div>
+	{% endif %}
+
+	{% if hotRollets %}
+	<h3>Recomended Games</h3>
+	<table class="table">
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col">Up</th>
+				<th scope="col">Time</th>
+				<th scope="col">Ticket</th>
+				<th scope="col">Winners</th>
+				<th scope="col" class="d-none d-sm-block">Percent</th>
+				<th scope="col">Earn</th>
+				<th scope="col" class="d-none d-md-block">Total</th>
+				<th scope="col">#</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for id, r in hotRollets.items() %}
+			{% include 'table-clms.html' %}
+			{% endfor %}
+		</tbody>
+	</table>
+	{% endif %}
+
+	
+	<h3>Games</h3>
+	<table class="table">
+		<thead class="thead-dark">
+			<tr>
+				<th scope="col">Up</th>
+				<th scope="col">Time</th>
+				<th scope="col">Ticket</th>
+				<th scope="col">Winners</th>
+				<th scope="col" class="d-none d-sm-block">Percent</th>
+				<th scope="col">Earn</th>
+				<th scope="col" class="d-none d-md-block">Total</th>
+				<th scope="col">#</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for id, r in rollets.items() %}
+			{% include 'table-clms.html' %}
+			{% endfor %}
+		</tbody>
+	</table>
+	{% if not rollets %}
+	<div class="row">
+		<div class="bg-light text-center col-12">
+			There is no Games Till now, <a href="" class=" mb-4" data-toggle="modal" data-target="#create-game">Create one</a>
+		</div>
+	</div>
+	{% endif %}
+
+	<div class="btn-toolbar justify-content-between" role="toolbar" aria-label="Toolbar with button groups">
+		<div class="btn-group" role="group" aria-label="First group">
+			{% for i in pagesCount %}
+			<button type="button" class="btn btn-secondary">{{i}}</button>
+			{% endfor %}
+		</div>
+	</div>
+</main>
+{% endblock %}

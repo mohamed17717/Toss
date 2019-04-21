@@ -1,0 +1,123 @@
+{% extends "layout.html" %}
+
+
+
+{% block title %}
+Welecome {{user.username}} 
+{% endblock %}
+
+{% block content %}
+
+<main id="game" class="">
+
+	
+	{% if theRollet.upNow %}
+	<div class="modal fade" id="join-game" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header text-center">
+					<h4 class="modal-title w-100 font-weight-bold">Join Game</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<form action="{{ url_for('joinGame', rolletId=theRollet.db.id) }}" method="POST">
+					<div class="modal-body mx-3">
+						<div class="input-group md-form mb-1">
+							<input type="number" class="form-control validate" name="times" placeholder="Times" required>
+						</div>
+					</div>
+					<div class="modal-footer d-flex justify-content-center">
+						<input type="submit" class="btn btn-outline-primary" value="Join">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div class="input-group-append d-flex justify-content-end">
+		<a href="" class="btn btn-outline-primary btn-rounded mb-4" data-toggle="modal" data-target="#join-game">
+			Join Game Now
+		</a>
+		{% if theRollet.db.creator == user.id %}
+		<form action="{{ url_for('removeGame', rolletId=theRollet.db.id) }}" method="post">
+			<input class="btn btn-outline-danger btn-rounded mb-4" type="submit" value="Remove This Game">
+		</form>
+		{% endif %}
+	</div>
+
+	<div class="row">
+		<div class="text-center bg-light col-12">
+			<span style="position: relative; margin-right: 15px;">
+				<span class="live-circle"></span>
+			</span>
+			<span>Up Now</span>
+		</div>
+	</div>
+	<br>
+	{% else %}
+	<div class="row">
+		<div class="text-center bg-light col-12">
+			<span style="position: relative; margin-right: 15px;">
+				<span class="down-circle"></span>
+			</span>
+			<span>Down</span>
+		</div>
+	</div>
+
+	{% if user.id in theRollet.participants %}
+		{% if theRollet.winners != [] %}
+			{% if user.id in theRollet.winners %}
+			<div class="row">
+				<div class="bg-green text-center col-12">
+					You Win
+				</div>
+			</div>
+			{% else %}
+			<div class="row">
+				<div class="bg-red text-center col-12">
+					You Lose
+				</div>
+			</div>
+			{% endif %}
+			<div class="row">
+				<h3 class="col-12 text-center">Winners</h3>
+				<ul class="col-12">
+					{% for winner in theRollet.winners %}
+					<li><a href="#">{{winner}}</a></li>
+					{% endfor %}
+				</ul>
+			</div>
+		{%else%}
+		<div class="row">
+			<h3 class="col-12 text-center">Winners</h3>
+			<div class="bg-light text-center col-12">
+				there  is no winners because there is only one compitator
+			</div>
+		</div>
+		{% endif %}
+	{% else %}
+	<div class="row">
+		<div class="bg-light text-center col-12">
+			You Are Not Joined This Game
+		</div>
+	</div>
+	{% endif %}
+
+	{% endif %}
+
+	<div class="row">
+		<h3 class="col-12 text-center">Information</h3>
+		<ul>
+			<li>Ticket Price: {{theRollet.ticket}}$</li>
+			<li>Total Participants: {{theRollet.totalParticipants}} user</li>
+			<li>Will Win: {{theRollet.winnersNumber}} user</li>
+			<li>Percent Of Winnig: {{theRollet.percentOfWinners}}%</li>
+			<li>every winner will take: {{theRollet.everyWinnerTake}}$</li>
+			<li>winning rate: {{theRollet.winningRate}}</li>
+		</ul>
+	</div>
+
+</main>
+
+{% endblock %}

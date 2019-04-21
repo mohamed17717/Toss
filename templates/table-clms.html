@@ -1,0 +1,53 @@
+<tr>
+    <th scope="row"><span class="{{ 'live' if r.upNow == 1 else 'down' }}"></span></th>
+    <td class="game-remaining-time">
+        <div class="d-none">{{ r.remainingSeconds }}</div>
+        <a href="{{ url_for('rollet', rolletId=id) }}">
+            {{ r.remainingSeconds }}
+        </a>
+    </td>
+    <td>
+        <a href="{{ url_for('rollet', rolletId=id) }}">
+            {{ r.ticket }}$
+        </a>
+    </td>
+
+    <td>
+        <a href="{{ url_for('rollet', rolletId=id) }}">
+            {{ r.winnersNumber }}/{{ r.totalParticipants }}
+        </a>
+    </td>
+
+    <td class="d-none d-sm-block">
+        <a href="{{ url_for('rollet', rolletId=id) }}">
+
+            {{ r.percentOfWinners }}%
+        </a>
+    </td>
+    <td>
+        <a href="{{ url_for('rollet', rolletId=id) }}">
+            {{ r.everyWinnerTake }}$
+        </a>
+    </td>
+    <td class="d-none d-md-block">
+        <a href="{{ url_for('rollet', rolletId=id) }}">
+            {{ r.totalMoney }}$
+        </a>
+    </td>
+    <td>
+        {% if r.upNow == 1 %}
+        {% if user.id in r.participants %}
+        <form action="{{ url_for('dareGame', rolletId=id) }}" method="POST">
+            <input class="btn btn-danger" type="submit" value="Dare">
+        </form>
+        {% else %}
+        <form action="{{ url_for('joinGame', rolletId=id) }}" method="POST">
+            <input type="hidden" name="times" value="1">
+            <input class="btn btn-success" type="submit" value="Join">
+        </form>
+        {% endif %}
+        {% else %}
+        -
+        {% endif %}
+    </td>
+</tr>
