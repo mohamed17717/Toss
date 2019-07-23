@@ -200,12 +200,8 @@ def win_Wallet(participantId, ticket, everyWinnerRealTake):
 def changeInUse_Wallet(ticket):
 	getWallet()
 	wallet = session['wallet']
-
-	print('\n\n\n', wallet, '\n\n\n')
 	wallet['inuse'] += ticket
 	wallet['balance'] += -ticket
-	print('\n\n\n', wallet, '\n\n\n')
-	
 	setWallet()
 
 def getBalance_Wallet():

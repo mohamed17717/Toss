@@ -85,7 +85,6 @@ class Rollet:
 		self.__compute__()
 
 	def isTimeOver(self):
-		print('\n\n\ntime ', time() , ' start time ',self.startTime , 'how long', self.howLong, '\n\n\n')
 		return time() - self.startTime >= self.howLong
 
 	def selectWinners(self):
@@ -94,7 +93,6 @@ class Rollet:
 			for _ in range(randint(3,10+1)):
 				shuffle(participants)
 
-			print('\n\n winners', len(self.winners), 'numbers', self.winnersNumber, '\n\n\n')
 			while len(self.winners) < self.winnersNumber:
 				winner = choice(participants)
 				participants.remove(winner)
