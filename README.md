@@ -1,1 +1,1 @@
-# Money Flood
+# Toss Game
