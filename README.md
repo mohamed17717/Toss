@@ -1,6 +1,7 @@
 # Toss Game
 
-game that all participants winning. you can select up to 80% percent of winning. low the risk or make it maximum you are the controller here.
+game that all participants winning. you can select up to 80% percent of winning.\
+low the risk **or** make it maximum you are the controller here.
 
 ## Getting Started
 
